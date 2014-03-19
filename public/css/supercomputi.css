@@ -1,0 +1,40 @@
+.lineadicomputo {
+    clear:both;
+}
+.tipolinea {
+    display:inline;
+    float:left;
+    margin-right:1em;
+    cursor:default;
+    background-color:inherit;
+}
+.choose {
+    float:left;
+    margin-right:1pt;
+    color:#aaa;
+    font-weight:normal;
+}
+.chosen {
+    color:#000;
+    font-weight:bold;
+}
+.fattore {
+    float: left;
+    width:10em;
+}
+.hidden {
+    display:none;
+}
+.shown {
+    display:block;
+}
+.selected {
+    background-color:#2fffff;
+}
+.cdfr {
+    float: left;
+    background-color:inherit;
+}
+.codice {
+    font-weight: bold;
+}

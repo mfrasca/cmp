@@ -31,90 +31,90 @@ body
               ul#toggle-menu-list.dropdown-menu
 
   #computo(style="margin-top:3em")
-    #linea-0000(style="clear:both;")
-      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
-        #choose-condice(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓒ
-        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
-        #choose-fattori(style="float:left;margin-right:1pt;color:#aaa;") Ⓕ
-        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
-      #codice(style="display:block")
-        #cd(style="float:left;")
+    #linea-0000.lineadicomputo
+      .tipolinea
+        .choose.chosen(onclick="choose(this, '.codice');") Ⓒ
+        .choose(onclick="choose(this, '.descrizione');") Ⓓ
+        .choose(onclick="choose(this, '.fattori');") Ⓕ
+        .choose(onclick="choose(this, '.relativo');") Ⓡ
+      .codice.shown
+        #cd.cdfr.codice
         | 01-001
-        | descrizione dell'articolo di tariffa, che può anche essere molto lunga
-      #descrizione(style="display:none")
+        | descrizione dell&apos;articolo di tariffa, che può anche essere molto lunga
+      .descrizione.cdfr.hidden
         #ds(style="float:left;")
-      #fattori(style="display:none")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-        #lr(style="float:left;width:10em;") 0.0
-        #hh(style="float:left;width:10em;") 0.0
-      #relativo(style="display:none")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-    #linea-0001(style="clear:both;")
-      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
-        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
-        #choose-descrizione(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓓ
-        #choose-fattori(style="float:left;margin-right:1pt;color:#aaa;") Ⓕ
-        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
-      #codice(style="display:none")
+      .fattori.cdfr.hidden
+        #qq.fattore 0
+        #ln.fattore 0.0
+        #lr.fattore 0.0
+        #hh.fattore 0.0
+      .relativo.cdfr.hidden
+        #qq.fattore 0
+        #ln.fattore 0.0
+    #linea-0001.lineadicomputo
+      .tipolinea
+        .choose(onclick="choose(this, '.codice');") Ⓒ
+        .choose.chosen(onclick="choose(this, '.descrizione');") Ⓓ
+        .choose(onclick="choose(this, '.fattori');") Ⓕ
+        .choose(onclick="choose(this, '.relativo');") Ⓡ
+      .codice.cdfr.hidden
         #cd(style="float:left;")
-      #descrizione(style="display:block")
+      .descrizione.cdfr.shown
         #ds(style="float:left;")
         | descrizione della voce di computo
-      #fattori(style="display:none")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-        #lr(style="float:left;width:10em;") 0.0
-        #hh(style="float:left;width:10em;") 0.0
-      #relativo(style="display:none")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-    #linea-0002(style="clear:both;")
-      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
-        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
-        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
-        #choose-fattori(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓕ
-        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
-      #descrizione(style="display:none")
+      .fattori.cdfr.hidden
+        #qq.fattore 0
+        #ln.fattore 0.0
+        #lr.fattore 0.0
+        #hh.fattore 0.0
+      .relativo.hidden
+        #qq.fattore 0
+        #ln.fattore 0.0
+    #linea-0002.lineadicomputo
+      .tipolinea
+        .choose(onclick="choose(this, '.codice');") Ⓒ
+        .choose(onclick="choose(this, '.descrizione');") Ⓓ
+        .choose.chosen(onclick="choose(this, '.fattori');") Ⓕ
+        .choose(onclick="choose(this, '.relativo');") Ⓡ
+      .descrizione.cdfr.hidden
         #ds(style="float:left;") testo vuoto
-      #fattori(style="display:block")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-        #lr(style="float:left;width:10em;") 0.0
-        #hh(style="float:left;width:10em;") 0.0
-      #relativo(style="display:none")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-    #linea-0003(style="clear:both;")
-      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
-        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
-        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
-        #choose-fattori(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓕ
-        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
-      #descrizione(style="display:none")
+      .fattori.cdfr.shown
+        #qq.fattore 0
+        #ln.fattore 0.0
+        #lr.fattore 0.0
+        #hh.fattore 0.0
+      .relativo.cdfr.hidden
+        #qq.fattore 0
+        #ln.fattore 0.0
+    #linea-0003.lineadicomputo
+      .tipolinea
+        .choose(onclick="choose(this, '.codice');") Ⓒ
+        .choose(onclick="choose(this, '.descrizione');") Ⓓ
+        .choose.chosen(onclick="choose(this, '.fattori');") Ⓕ
+        .choose(onclick="choose(this, '.relativo');") Ⓡ
+      .descrizione.cdfr.hidden
         #ds(style="float:left;") testo vuoto
-      #fattori(style="display:block")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-        #lr(style="float:left;width:10em;") 0.0
-        #hh(style="float:left;width:10em;") 0.0
-      #relativo(style="display:none")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-    #linea-0004(style="clear:both;")
-      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
-        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
-        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
-        #choose-fattori(style="float:left;margin-right:1pt;color:#aaa;") Ⓕ
-        #choose-relativo(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓡ
-      #descrizione(style="display:none")
+      .fattori.cdfr.shown
+        #qq.fattore 0
+        #ln.fattore 0.0
+        #lr.fattore 0.0
+        #hh.fattore 0.0
+      .relativo.cdfr.hidden
+        #qq.fattore 0
+        #ln.fattore 0.0
+    #linea-0004.lineadicomputo.selected
+      .tipolinea
+        .choose(onclick="choose(this, '.codice');") Ⓒ
+        .choose(onclick="choose(this, '.descrizione');") Ⓓ
+        .choose(onclick="choose(this, '.fattori');") Ⓕ
+        .choose.chosen(onclick="choose(this, '.relativo');") Ⓡ
+      .descrizione.cdfr.hidden
         #ds(style="float:left;") testo vuoto
-      #fattori(style="display:none")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
-        #lr(style="float:left;width:10em;") 0.0
-        #hh(style="float:left;width:10em;") 0.0
-      #relativo(style="display:block")
-        #qq(style="float:left;width:10em;") 0
-        #ln(style="float:left;width:10em;") 0.0
+      .fattori.cdfr.hidden
+        #qq.fattore 0
+        #ln.fattore 0.0
+        #lr.fattore 0.0
+        #hh.fattore 0.0
+      .relativo.cdfr.shown
+        #qq.fattore 0
+        #ln.fattore 0.0
