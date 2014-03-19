@@ -1,0 +1,5 @@
+.env
+*~
+*/*~
+*/*/*~
+public/lib/npm-debug.log

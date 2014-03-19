@@ -1,0 +1,28 @@
+{
+  "name": "supercomputi",
+  "version": "0.0.0",
+  "description": "on-line computi metrici e revisione prezzi",
+  "main": "web.js",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "express": "~3.4.8",
+    "jade": "~1.3.0",
+    "socket.io": "~0.9.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "contabilità",
+    "geometra",
+    "lavori",
+    "pubblici"
+  ],
+  "author": "Mario Frasca",
+  "license": "GPL",
+  "gitHead": "07fd749508af2b57714a5b1a0ebda4413f42ff8d"
+}

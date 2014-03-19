@@ -2,7 +2,8 @@
 
 var express = require("express");
 var app = express();
-var port = Number(process.env.PORT || 5000);
+var port = Number(process.env.PORT || 5010);
+console.log("will open port " + port);
 
 var fs = require('fs');
 
@@ -26,3 +27,6 @@ app.get("/", function(req, res){
     res.render("accueil");
 });
 
+var io = require('socket.io').listen(app.listen(port, function() {
+            console.log("Listening on " + port);
+        }));

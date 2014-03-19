@@ -1,0 +1,120 @@
+doctype html
+head
+  script(src='/socket.io/socket.io.js')
+  script(src='/lib/jquery-latest.min.js')
+  script(src='/lib/bootstrap.min.js')
+  script(src='/js/supercomputi.js')
+  link(rel='stylesheet', href='/css/bootstrap.css')
+  link(rel='stylesheet', href='/css/supercomputi.css')
+  script.
+    $(init);
+
+body
+
+  .navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner 
+      .container
+        a.brand SuperFrasca
+        .collapse.nav-collapse
+          ul.nav.navbar-nav
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                i.icon-question-sign.icon-white
+                |  help
+                b.caret
+              ul#help-menu-list.dropdown-menu
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                i.icon-off.icon-white
+                |  toggle
+                b.caret
+              ul#toggle-menu-list.dropdown-menu
+
+  #computo(style="margin-top:3em")
+    #linea-0000(style="clear:both;")
+      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
+        #choose-condice(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓒ
+        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
+        #choose-fattori(style="float:left;margin-right:1pt;color:#aaa;") Ⓕ
+        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
+      #codice(style="display:block")
+        #cd(style="float:left;")
+        | 01-001
+        | descrizione dell'articolo di tariffa, che può anche essere molto lunga
+      #descrizione(style="display:none")
+        #ds(style="float:left;")
+      #fattori(style="display:none")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+        #lr(style="float:left;width:10em;") 0.0
+        #hh(style="float:left;width:10em;") 0.0
+      #relativo(style="display:none")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+    #linea-0001(style="clear:both;")
+      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
+        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
+        #choose-descrizione(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓓ
+        #choose-fattori(style="float:left;margin-right:1pt;color:#aaa;") Ⓕ
+        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
+      #codice(style="display:none")
+        #cd(style="float:left;")
+      #descrizione(style="display:block")
+        #ds(style="float:left;")
+        | descrizione della voce di computo
+      #fattori(style="display:none")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+        #lr(style="float:left;width:10em;") 0.0
+        #hh(style="float:left;width:10em;") 0.0
+      #relativo(style="display:none")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+    #linea-0002(style="clear:both;")
+      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
+        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
+        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
+        #choose-fattori(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓕ
+        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
+      #descrizione(style="display:none")
+        #ds(style="float:left;") testo vuoto
+      #fattori(style="display:block")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+        #lr(style="float:left;width:10em;") 0.0
+        #hh(style="float:left;width:10em;") 0.0
+      #relativo(style="display:none")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+    #linea-0003(style="clear:both;")
+      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
+        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
+        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
+        #choose-fattori(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓕ
+        #choose-relativo(style="float:left;margin-right:1pt;color:#aaa;") Ⓡ
+      #descrizione(style="display:none")
+        #ds(style="float:left;") testo vuoto
+      #fattori(style="display:block")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+        #lr(style="float:left;width:10em;") 0.0
+        #hh(style="float:left;width:10em;") 0.0
+      #relativo(style="display:none")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+    #linea-0004(style="clear:both;")
+      #tipolinea(style="display:inline;float:left;margin-right:1em;cursor:pointer;")
+        #choose-condice(style="float:left;margin-right:1pt;color:#aaa;") Ⓒ
+        #choose-descrizione(style="float:left;margin-right:1pt;color:#aaa;") Ⓓ
+        #choose-fattori(style="float:left;margin-right:1pt;color:#aaa;") Ⓕ
+        #choose-relativo(style="float:left;margin-right:1pt;color:#000;font-weight:bold;") Ⓡ
+      #descrizione(style="display:none")
+        #ds(style="float:left;") testo vuoto
+      #fattori(style="display:none")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
+        #lr(style="float:left;width:10em;") 0.0
+        #hh(style="float:left;width:10em;") 0.0
+      #relativo(style="display:block")
+        #qq(style="float:left;width:10em;") 0
+        #ln(style="float:left;width:10em;") 0.0
