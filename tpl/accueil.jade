@@ -33,12 +33,12 @@ body
   #computo(style="margin-top:3em")
     #linea-0000.lineadicomputo
       .tipolinea
-        .choose.chosen(lettera=".codice") Ⓒ
-        .choose(lettera='.descrizione') Ⓓ
-        .choose(lettera='.fattori') Ⓕ
-        .choose(lettera='.relativo') Ⓡ
+        .choose.chosen(lettera=".codice", onclick="choose(this);") Ⓒ
+        .choose(lettera='.descrizione', onclick="choose(this);") Ⓓ
+        .choose(lettera='.fattori', onclick="choose(this);") Ⓕ
+        .choose(lettera='.relativo', onclick="choose(this);") Ⓡ
       .codice.cdfr.shown
-        .cd.codice
+        .cd.cdfr.codice
           .cod.fattore 01-001
           .desc.cdfr descrizione dell&apos;articolo di tariffa, che può anche essere molto lunga
       .descrizione.cdfr.hidden
@@ -53,10 +53,10 @@ body
         .ln.fattore 0.0
     #linea-0001.lineadicomputo
       .tipolinea
-        .choose(lettera=".codice") Ⓒ
-        .choose.chosen(lettera='.descrizione') Ⓓ
-        .choose(lettera='.fattori') Ⓕ
-        .choose(lettera='.relativo') Ⓡ
+        .choose(lettera=".codice", onclick="choose(this);") Ⓒ
+        .choose.chosen(lettera='.descrizione', onclick="choose(this);") Ⓓ
+        .choose(lettera='.fattori', onclick="choose(this);") Ⓕ
+        .choose(lettera='.relativo', onclick="choose(this);") Ⓡ
       .codice.cdfr.hidden
         .cd
       .descrizione.cdfr.shown
@@ -72,10 +72,10 @@ body
         .ln.fattore 0.0
     #linea-0002.lineadicomputo
       .tipolinea
-        .choose(lettera=".codice") Ⓒ
-        .choose(lettera='.descrizione') Ⓓ
-        .choose.chosen(lettera='.fattori') Ⓕ
-        .choose(lettera='.relativo') Ⓡ
+        .choose(lettera=".codice", onclick="choose(this);") Ⓒ
+        .choose(lettera='.descrizione', onclick="choose(this);") Ⓓ
+        .choose.chosen(lettera='.fattori', onclick="choose(this);") Ⓕ
+        .choose(lettera='.relativo', onclick="choose(this);") Ⓡ
       .descrizione.cdfr.hidden
         .ds testo vuoto
       .fattori.cdfr.shown
@@ -88,10 +88,10 @@ body
         .ln.fattore 0.0
     #linea-0003.lineadicomputo
       .tipolinea
-        .choose(lettera=".codice") Ⓒ
-        .choose(lettera='.descrizione') Ⓓ
-        .choose.chosen(lettera='.fattori') Ⓕ
-        .choose(lettera='.relativo') Ⓡ
+        .choose(lettera=".codice", onclick="choose(this);") Ⓒ
+        .choose(lettera='.descrizione', onclick="choose(this);") Ⓓ
+        .choose.chosen(lettera='.fattori', onclick="choose(this);") Ⓕ
+        .choose(lettera='.relativo', onclick="choose(this);") Ⓡ
       .descrizione.cdfr.hidden
         .ds testo vuoto
       .fattori.cdfr.shown
@@ -104,10 +104,10 @@ body
         .ln.fattore 0.0
     #linea-0004.lineadicomputo.selected
       .tipolinea
-        .choose(lettera=".codice") Ⓒ
-        .choose(lettera='.descrizione') Ⓓ
-        .choose(lettera='.fattori') Ⓕ
-        .choose.chosen(lettera='.relativo') Ⓡ
+        .choose(lettera=".codice", onclick="choose(this);") Ⓒ
+        .choose(lettera='.descrizione', onclick="choose(this);") Ⓓ
+        .choose(lettera='.fattori', onclick="choose(this);") Ⓕ
+        .choose.chosen(lettera='.relativo', onclick="choose(this);") Ⓡ
       .descrizione.cdfr.hidden
         .ds testo vuoto
       .fattori.cdfr.hidden
