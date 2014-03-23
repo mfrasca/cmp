@@ -37,18 +37,19 @@ String.prototype.formatU = function() {
     return str;
 };
 
-function choose(obj, letter) {
+function choose(obj) {
 // make the line at obj be of obj type
 //
 // obj is one of the 4 circled letters, CDFR. if hit, the letter becomes
 // bold and the content of the line will match the chosen letter.
 
-    $(obj.parentElement.children).removeClass('chosen');
+    $(obj).parent().children().removeClass('chosen');
     $(obj).addClass('chosen');
-    var linea = $(obj.parentElement.parentElement);
-    $(linea).children('.shown').addClass("hidden");
-    $(linea).children('.shown').removeClass("shown");
-    $(linea).children(letter).addClass("shown");
+    var linea = $(obj).parent().parent();
+    $(linea).children('.cdfr').addClass("hidden");
+    $(linea).children('.cdfr').removeClass("shown");
+    $(linea).children($(obj).attr("lettera")).addClass("shown");
+    $(linea).children($(obj).attr("lettera")).removeClass("hidden");
 }
 
 // to be called at document ready!
@@ -72,8 +73,18 @@ function init() {
                 $(selected).next().addClass("selected");
                 $(selected).removeClass("selected");
             }
+        } else if(e.ctrlKey) {
+            var circledDiv = $(".selected").children(".tipolinea");
+            if(e.charCode===99)
+                choose($(circledDiv).children("[lettera='.codice']"));
+            else if(e.charCode===100)
+                choose($(circledDiv).children("[lettera='.descrizione']"));
+            else if(e.charCode===102)
+                choose($(circledDiv).children("[lettera='.fattori']"));
+            else if(e.charCode===114)
+                choose($(circledDiv).children("[lettera='.relativo']"));
+            e.preventDefault();
         }
-
 
 
     });
