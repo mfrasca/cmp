@@ -102,6 +102,24 @@ function load_computo() {
           hh: 0.0,
         },
         { tipo: 'fattori',
+          qq: 2,
+          ln: 1.0,
+          lr: 4.0,
+          hh: 0.0,
+        },
+        { tipo: 'fattori',
+          qq: 2,
+          ln: 1.0,
+          lr: 4.0,
+          hh: 0.0,
+        },
+        { tipo: 'fattori',
+          qq: 2,
+          ln: 1.0,
+          lr: 4.0,
+          hh: 0.0,
+        },
+        { tipo: 'fattori',
           qq: 1,
           ln: 1.0,
           lr: 0.0,
@@ -142,6 +160,39 @@ function load_computo() {
         var lineadicomputo = $("<div/>", { id: id_linea,
                                            class: "lineadicomputo",
                                          });
+        $(lineadicomputo).keypress(function(e) {
+            if(e.key==='Up') {
+                if($(lineadicomputo).prev().length) {
+                    $(lineadicomputo).prev().children().children(".getsfocus").focus();
+                }
+            } else if(e.key==='Down') {
+                if($(lineadicomputo).next().length) {
+                    $(lineadicomputo).next().children().children(".getsfocus").focus();
+                }
+            } else if(e.ctrlKey) {
+                var circledDiv = $(lineadicomputo).children(".tipolinea");
+                switch(e.charCode) {
+                case 99:
+                    choose($(circledDiv).children("[lettera='.codice']"));
+                    $(lineadicomputo).children(".codice").children().focus();
+                    break;
+                case 100:
+                    choose($(circledDiv).children("[lettera='.descrizione']"));
+                    $(lineadicomputo).children(".descrizione").children().focus();
+                    break;
+                case 102:
+                    choose($(circledDiv).children("[lettera='.fattori']"));
+                    $(lineadicomputo).children(".fattori").children(".qq").focus();
+                    break;
+                case 114:
+                    choose($(circledDiv).children("[lettera='.relativo']"));
+                    $(lineadicomputo).children(".relativo").children(".qq").focus();
+                    break;
+                }
+                e.preventDefault();
+            }
+        });
+
         var tipolinea = $("<div/>", { class: "tipolinea" });
         lineadicomputo.append(tipolinea);
         $.each([{l: 'codice', t: 'Ⓒ'},
@@ -168,7 +219,11 @@ function load_computo() {
                    lineadicomputo.append(part);
                    $.each(elm.content, function(j, what) {
                        var input = $("<input/>", { class: what,
-                                                   value: linea[what]});
+                                                   value: linea[what],
+                                                   onfocus: "$('.selected').removeClass('selected'); $(this).parent().parent().addClass('selected');",
+                                                 });
+                       if(j===0)
+                           $(input).addClass("getsfocus");
                        switch(elm.part){
                        case 'fattori':
                        case 'relativo':
@@ -215,32 +270,7 @@ function init() {
     // open the communication socket!!!
     socket = io.connect(window.location.href);
 
-    $(document).keypress(function(e) {
-        var selected = $(".selected");
-        if(e.key==='Up') {
-            if($(selected).prev().length) {
-                $(selected).prev().addClass("selected");
-                $(selected).removeClass("selected");
-            }
-        } else if(e.key==='Down') {
-            if($(selected).next().length) {
-                $(selected).next().addClass("selected");
-                $(selected).removeClass("selected");
-            }
-        } else if(e.ctrlKey) {
-            var circledDiv = $(".selected").children(".tipolinea");
-            if(e.charCode===99)
-                choose($(circledDiv).children("[lettera='.codice']"));
-            else if(e.charCode===100)
-                choose($(circledDiv).children("[lettera='.descrizione']"));
-            else if(e.charCode===102)
-                choose($(circledDiv).children("[lettera='.fattori']"));
-            else if(e.charCode===114)
-                choose($(circledDiv).children("[lettera='.relativo']"));
-            e.preventDefault();
-        }
-
-
-    });
+    $(document)
     load_computo();
+    $("#l0000-00").children().children(".getsfocus").focus();
 }

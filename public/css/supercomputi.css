@@ -1,21 +1,28 @@
 .lineadicomputo {
     clear:both;
+    background-color:inherit;
 }
 .tipolinea {
     display:inline;
     float:left;
-    margin-right:1em;
+    border-width: 1px;
+    border-color: #bbb;
+    border-style: solid;
+    border-radius: 2pt;
+    padding: 1pt;
+    margin: 1pt 6pt 4pt 2pt;
     cursor:default;
     background-color:inherit;
 }
 .choose {
     float:left;
-    margin-right:1pt;
+    margin:0pt 1pt 0 1pt;
     color:#aaa;
     font-weight:normal;
 }
 .chosen {
     color:#000;
+    margin:0pt 1pt;
     font-weight:bold;
 }
 .fattore {
@@ -34,7 +41,6 @@
 .cdfr {
     height: 2em;
     float: left;
-    background-color:inherit;
 }
 .cod {
     font-weight: bold;
