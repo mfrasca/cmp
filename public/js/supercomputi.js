@@ -57,7 +57,7 @@ function load_computo() {
           codice: '01 001',
         },
         { tipo: 'descrizione',
-          testo: 'descrizione dell&apos;articolo riferito',
+          desc: 'descrizione dell\'articolo riferito',
         },
         { tipo: 'fattori',
           qq: 1,
@@ -167,7 +167,8 @@ function load_computo() {
                                             class: "cdfr hidden " + elm.part });
                    lineadicomputo.append(part);
                    $.each(elm.content, function(j, what) {
-                       var input = $("<input/>", {class: what});
+                       var input = $("<input/>", { class: what,
+                                                   value: linea[what]});
                        switch(elm.part){
                        case 'fattori':
                        case 'relativo':
