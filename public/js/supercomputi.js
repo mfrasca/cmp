@@ -23,7 +23,7 @@ var socket;
 //
 // GLOBAL FUNCTIONS
 
-var lastEvent;
+var currentcolumn;
 
 String.prototype.formatU = function() {
     var str = this.toString();
@@ -92,11 +92,21 @@ function load_computo(computo) {
         $(lineadicomputo).keypress(function(e) {
             if(e.key==='Up') {
                 if($(lineadicomputo).prev().length) {
-                    $(lineadicomputo).prev().children().children(".getsfocus").focus();
+                    var inputsonline = $(lineadicomputo).prev().children('.shown').children();
+                    if($(inputsonline).length > currentcolumn) {
+                        $(inputsonline[currentcolumn]).focus()
+                    } else {
+                        $(lineadicomputo).prev().children().children(".getsfocus").focus();
+                    }
                 }
             } else if(e.key==='Down') {
                 if($(lineadicomputo).next().length) {
-                    $(lineadicomputo).next().children().children(".getsfocus").focus();
+                    var inputsonline = $(lineadicomputo).next().children('.shown').children();
+                    if($(inputsonline).length > currentcolumn) {
+                        $(inputsonline[currentcolumn]).focus()
+                    } else {
+                        $(lineadicomputo).next().children().children(".getsfocus").focus();
+                    }
                 }
             } else if(e.ctrlKey) {
                 var circledDiv = $(lineadicomputo).children(".tipolinea");
@@ -122,7 +132,9 @@ function load_computo(computo) {
             }
         });
         
-        var tipolinea = $("<div/>", { class: "tipolinea" });
+        var tipolinea = $("<div/>", { class: "tipolinea",
+                                      onclick: "$($(this).parent().children('.shown').children()[0]).focus();",
+                                    });
         lineadicomputo.append(tipolinea);
         $.each([{l: 'codice', t: 'Ⓒ'},
                 {l: 'descrizione', t: 'Ⓓ'},
@@ -149,19 +161,21 @@ function load_computo(computo) {
                    $.each(elm.content, function(j, what) {
                        var input = $("<input/>", { class: what,
                                                    value: linea[what],
-                                                   onfocus: "$('.selected').removeClass('selected'); $(this).parent().parent().addClass('selected');",
                                                  });
+                       var onfocus = "$('.selected').removeClass('selected');$(this).parent().parent().addClass('selected');";
                        if(j===0)
                            $(input).addClass("getsfocus");
                        switch(elm.part){
                        case 'fattori':
                        case 'relativo':
                            input.addClass('fattore');
+                           onfocus += "currentcolumn="+j+";"
                            break;
                        case 'descrizione':
                            input.addClass('ds');
                            break;
                        }
+                       $(input).attr('onfocus', onfocus);
                        part.append(input);
                    });
                });
@@ -189,6 +203,7 @@ function load_computo(computo) {
         }
     });
     $("#l0000-00").children().children(".getsfocus").focus();
+    currentcolumn = 0;
 }
 
 function init_socket() {
