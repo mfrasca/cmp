@@ -51,110 +51,39 @@ function choose(obj) {
     $(linea).children($(obj).attr("lettera")).removeClass("hidden");
 }
 
-function load_computo() {
-    var computo = [
-        { tipo: 'codice',
-          codice: '01 001',
-        },
-        { tipo: 'descrizione',
-          desc: 'descrizione dell\'articolo riferito',
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 2,
-          ln: 1.0,
-          lr: 4.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 2,
-          ln: 1.0,
-          lr: 4.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 2,
-          ln: 1.0,
-          lr: 4.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'fattori',
-          qq: 1,
-          ln: 1.0,
-          lr: 0.0,
-          hh: 0.0,
-        },
-        { tipo: 'relativo',
-          qq: 1,
-          ln: 1.0,
-        },
-    ];
+function save_computo() {
+    var result = [];
 
+    $.each($("#computo").children(), function(index, elemento) {
+        var linea;
+        linea = {};
+        linea.tipo = ($(elemento).children(".shown").attr("id").split("-")[2]);
+        switch(linea.tipo) {
+        case "codice":
+            linea.codice = $(elemento).children(".codice").children("input").val();
+            break;
+        case "descrizione":
+            linea.descrizione = $(elemento).children(".descrizione").children("input").val();
+            break;
+        case "fattori":
+            linea.qq = $(elemento).children(".fattori").children("input.qq").val();
+            linea.ln = $(elemento).children(".fattori").children("input.ln").val();
+            linea.lr = $(elemento).children(".fattori").children("input.lr").val();
+            linea.hh = $(elemento).children(".fattori").children("input.hh").val();
+            break;
+        case "relativo":
+            linea.qq = $(elemento).children(".relativo").children("input.qq").val();
+            linea.ln = $(elemento).children(".relativo").children("input.ln").val();
+            break;
+        }
+        result.push(linea);
+    });
+    return({computo: result});
+}
+
+function load_computo(computo) {
+    $("#computo").empty();
+    
     $.each(computo, function(index, linea) {
         var id_linea = "l" + (10000 + index).toFixed(0).substr(1) + "-00";
         var lineadicomputo = $("<div/>", { id: id_linea,
@@ -192,7 +121,7 @@ function load_computo() {
                 e.preventDefault();
             }
         });
-
+        
         var tipolinea = $("<div/>", { class: "tipolinea" });
         lineadicomputo.append(tipolinea);
         $.each([{l: 'codice', t: 'Ⓒ'},
@@ -259,6 +188,11 @@ function load_computo() {
             break;
         }
     });
+    $("#l0000-00").children().children(".getsfocus").focus();
+}
+
+function init_socket() {
+    socket.on('load', load_computo );
 }
 
 // to be called at document ready!
@@ -270,7 +204,7 @@ function init() {
     // open the communication socket!!!
     socket = io.connect(window.location.href);
 
+    init_socket();
+
     $(document)
-    load_computo();
-    $("#l0000-00").children().children(".getsfocus").focus();
 }

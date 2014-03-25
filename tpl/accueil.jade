@@ -20,9 +20,12 @@ body
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.icon-question-sign.icon-white
-                |  help
+                |  file
                 b.caret
-              ul#help-menu-list.dropdown-menu
+              ul#file-menu-list.dropdown-menu
+                li
+                  a(href='#', onclick="socket.emit('load', ['nome_del_computo']);") load
+                  a(href='#', onclick="socket.emit('save', save_computo());") save
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.icon-off.icon-white
