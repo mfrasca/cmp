@@ -24,13 +24,16 @@ body
                 b.caret
               ul#file-menu-list.dropdown-menu
                 li
-                  a(href='#', onclick="request_computo();") load
+                  a(href='#', onclick="create_computo();") new
+                  a(href='#', onclick="request_computo();") open
                   a(href='#', onclick="save_computo();") save
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
-                i.icon-off.icon-white
-                |  toggle
+                i.icon-th-list.icon-white
+                |  tariffa
                 b.caret
               ul#toggle-menu-list.dropdown-menu
+                li
+                  a(href='#', onclick="request_tariffa();") review
 
   #computo(style="margin-top:3em;background-color:inherit;")
