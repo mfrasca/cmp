@@ -84,6 +84,107 @@ function save_computo() {
                         });
 }
 
+function create_linea_di_computo(id_linea, tipocdfr) {
+    var lineadicomputo = $("<div/>", { id: id_linea,
+                                       class: "lineadicomputo",
+                                     });
+    var inputsonline;
+    $(lineadicomputo).keypress(function(e) {
+        if(e.key==='Up') {
+            if($(lineadicomputo).prev().length) {
+                inputsonline = $(lineadicomputo).prev().children('.shown').children();
+                if($(inputsonline).length > currentcolumn) {
+                    $(inputsonline[currentcolumn]).focus();
+                } else {
+                    $(lineadicomputo).prev().children().children(".getsfocus").focus();
+                }
+            }
+        } else if(e.key==='Down') {
+            if($(lineadicomputo).next().length) {
+                inputsonline = $(lineadicomputo).next().children('.shown').children();
+                if($(inputsonline).length > currentcolumn) {
+                    $(inputsonline[currentcolumn]).focus();
+                } else {
+                    $(lineadicomputo).next().children().children(".getsfocus").focus();
+                }
+            }
+        } else if(e.ctrlKey) {
+            var circledDiv = $(lineadicomputo).children(".tipolinea");
+            var selector = false;
+            switch(e.charCode) {
+            case 99: selector = '.codice'; break;
+            case 100: selector = '.descrizione'; break;
+            case 102: selector = '.fattori'; break;
+            case 114: selector = '.relativo'; break;
+            }
+            if (selector !== false){
+                choose($(circledDiv).children("[lettera='" + selector + "']"));
+                $(lineadicomputo).children(selector).children(".getsfocus").focus();
+                e.preventDefault();
+            }
+        }
+    });
+    
+    var tipolinea = $("<div/>", { class: "tipolinea",
+                                  onclick: "$($(this).parent().children('.shown').children()[0]).focus();",
+                                });
+    lineadicomputo.append(tipolinea);
+    $.each([{t: 'Ⓒ', l: 'codice',},
+            {t: 'Ⓓ', l: 'descrizione',},
+            {t: 'Ⓕ', l: 'fattori',},
+            {t: 'Ⓡ', l: 'relativo',},
+           ], function(ignore, tipo) {
+               var elm = $("<div/>", { class: "choose",
+                                       lettera: "." + tipo.l,
+                                       onclick: "choose(this);",
+                                     });
+               if (tipocdfr === tipo.l) 
+                   elm.addClass("chosen");
+               elm.text(tipo.t);
+               tipolinea.append(elm);
+           });
+    $.each([{ part: 'codice', content: ['cod'] },
+            { part: 'descrizione', content: ['desc']},
+            { part: 'fattori', content: ['qq', 'ln', 'lr', 'hh'] },
+            { part: 'relativo', content: ['qq', 'ln'] },
+           ], function(i, elm) {
+               var part = $("<div/>", { id: id_linea + "-" + elm.part,
+                                        class: "cdfr hidden " + elm.part });
+               lineadicomputo.append(part);
+               $.each(elm.content, function(j, what) {
+                   var input = $("<input/>", { class: what,
+                                             });
+                   var onfocus = "$('.selected').removeClass('selected');$(this).parent().parent().addClass('selected');";
+                   if(j===0)
+                       $(input).addClass("getsfocus");
+                   switch(elm.part){
+                   case 'fattori':
+                   case 'relativo':
+                       input.addClass('fattore');
+                       onfocus += "currentcolumn=" + j + ";$(this).select();";
+                       break;
+                   case 'descrizione':
+                       input.addClass('ds');
+                       break;
+                   }
+                   $(input).attr('onfocus', onfocus);
+                   part.append(input);
+               });
+           });
+    return lineadicomputo;
+}
+
+function create_computo() {
+    $('#computo').empty();
+    var lineadicomputo = create_linea_di_computo('l0000-00', 'codice');
+    $("#computo").append(lineadicomputo);
+    var obj = $('#l0000-00-codice');
+    obj.removeClass('hidden');
+    obj.addClass('shown');
+    $("#l0000-00").children().children(".getsfocus").focus();
+    currentcolumn = 0;
+}
+
 function request_computo() {
     $('#computo').empty();
     socket.emit('load', {nome: 'irrilevante'});
@@ -95,93 +196,7 @@ function receive_computo(params) {
     
     $.each(params.computo, function(index, linea) {
         var id_linea = "l" + (10000 + index).toFixed(0).substr(1) + "-00";
-        var lineadicomputo = $("<div/>", { id: id_linea,
-                                           class: "lineadicomputo",
-                                         });
-        var inputsonline;
-        $(lineadicomputo).keypress(function(e) {
-            if(e.key==='Up') {
-                if($(lineadicomputo).prev().length) {
-                    inputsonline = $(lineadicomputo).prev().children('.shown').children();
-                    if($(inputsonline).length > currentcolumn) {
-                        $(inputsonline[currentcolumn]).focus();
-                    } else {
-                        $(lineadicomputo).prev().children().children(".getsfocus").focus();
-                    }
-                }
-            } else if(e.key==='Down') {
-                if($(lineadicomputo).next().length) {
-                    inputsonline = $(lineadicomputo).next().children('.shown').children();
-                    if($(inputsonline).length > currentcolumn) {
-                        $(inputsonline[currentcolumn]).focus();
-                    } else {
-                        $(lineadicomputo).next().children().children(".getsfocus").focus();
-                    }
-                }
-            } else if(e.ctrlKey) {
-                var circledDiv = $(lineadicomputo).children(".tipolinea");
-                var selector = false;
-                switch(e.charCode) {
-                case 99: selector = '.codice'; break;
-                case 100: selector = '.descrizione'; break;
-                case 102: selector = '.fattori'; break;
-                case 114: selector = '.relativo'; break;
-                }
-                if (selector !== false){
-                    choose($(circledDiv).children("[lettera='" + selector + "']"));
-                    $(lineadicomputo).children(selector).children(".getsfocus").focus();
-                    e.preventDefault();
-                }
-            }
-        });
-        
-        var tipolinea = $("<div/>", { class: "tipolinea",
-                                      onclick: "$($(this).parent().children('.shown').children()[0]).focus();",
-                                    });
-        lineadicomputo.append(tipolinea);
-        $.each([{t: 'Ⓒ', l: 'codice',},
-                {t: 'Ⓓ', l: 'descrizione',},
-                {t: 'Ⓕ', l: 'fattori',},
-                {t: 'Ⓡ', l: 'relativo',},
-               ], function(ignore, tipo) {
-                   var elm = $("<div/>", { class: "choose",
-                                           lettera: "." + tipo.l,
-                                           onclick: "choose(this);",
-                                         });
-                   if (linea.tipo === tipo.l) 
-                       elm.addClass("chosen");
-                   elm.text(tipo.t);
-                   tipolinea.append(elm);
-               });
-        $.each([{ part: 'codice', content: ['cod'] },
-                { part: 'descrizione', content: ['desc']},
-                { part: 'fattori', content: ['qq', 'ln', 'lr', 'hh'] },
-                { part: 'relativo', content: ['qq', 'ln'] },
-               ], function(i, elm) {
-                   var part = $("<div/>", { id: id_linea + "-" + elm.part,
-                                            class: "cdfr hidden " + elm.part });
-                   lineadicomputo.append(part);
-                   $.each(elm.content, function(j, what) {
-                       var input = $("<input/>", { class: what,
-                                                   value: linea[what],
-                                                 });
-                       var onfocus = "$('.selected').removeClass('selected');$(this).parent().parent().addClass('selected');";
-                       if(j===0)
-                           $(input).addClass("getsfocus");
-                       switch(elm.part){
-                       case 'fattori':
-                       case 'relativo':
-                           input.addClass('fattore');
-                           onfocus += "currentcolumn=" + j + ";$(this).select();";
-                           break;
-                       case 'descrizione':
-                           input.addClass('ds');
-                           break;
-                       }
-                       $(input).attr('onfocus', onfocus);
-                       part.append(input);
-                   });
-               });
+        var lineadicomputo = create_linea_di_computo(id_linea, linea.tipo);
         $("#computo").append(lineadicomputo);
         var obj = $('#' + id_linea + '-' + linea.tipo);
         obj.removeClass('hidden');
