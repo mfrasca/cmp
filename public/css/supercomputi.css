@@ -50,3 +50,6 @@
 .ds {
     width: 41.25em;
 }
+.grayed {
+    background-color:#2f2f2f;
+}

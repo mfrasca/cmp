@@ -11,7 +11,7 @@ head
 
 body
 
-  .navbar.navbar-inverse.navbar-fixed-top(style="padding-bottom:3em;")
+  .navbar.navbar-inverse.navbar-fixed-top
     .navbar-inner 
       .container
         a.brand SuperFrasca
@@ -19,13 +19,13 @@ body
           ul.nav.navbar-nav
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
-                i.icon-question-sign.icon-white
-                |  file
+                i.icon-folder-open.icon-white
+                |  computo
                 b.caret
               ul#file-menu-list.dropdown-menu
                 li
-                  a(href='#', onclick="socket.emit('load', ['nome_del_computo']);") load
-                  a(href='#', onclick="socket.emit('save', save_computo());") save
+                  a(href='#', onclick="request_computo();") load
+                  a(href='#', onclick="save_computo();") save
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.icon-off.icon-white
@@ -33,4 +33,4 @@ body
                 b.caret
               ul#toggle-menu-list.dropdown-menu
 
-  #computo(style="margin-top:3em;")
+  #computo(style="margin-top:3em;background-color:inherit;")

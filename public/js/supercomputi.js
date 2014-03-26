@@ -78,57 +78,60 @@ function save_computo() {
         }
         result.push(linea);
     });
-    return({computo: result});
+    console.log(result);
+    socket.emit('save', { nome: 'irrilevante',
+                          computo: result
+                        });
 }
 
-function load_computo(computo) {
+function request_computo() {
+    $('#computo').empty();
+    socket.emit('load', {nome: 'irrilevante'});
+}
+
+function receive_computo(params) {
     $("#computo").empty();
+    $("#computo").removeClass('grayed');
     
-    $.each(computo, function(index, linea) {
+    $.each(params.computo, function(index, linea) {
         var id_linea = "l" + (10000 + index).toFixed(0).substr(1) + "-00";
         var lineadicomputo = $("<div/>", { id: id_linea,
                                            class: "lineadicomputo",
                                          });
+        var inputsonline;
         $(lineadicomputo).keypress(function(e) {
             if(e.key==='Up') {
                 if($(lineadicomputo).prev().length) {
-                    var inputsonline = $(lineadicomputo).prev().children('.shown').children();
+                    inputsonline = $(lineadicomputo).prev().children('.shown').children();
                     if($(inputsonline).length > currentcolumn) {
-                        $(inputsonline[currentcolumn]).focus()
+                        $(inputsonline[currentcolumn]).focus();
                     } else {
                         $(lineadicomputo).prev().children().children(".getsfocus").focus();
                     }
                 }
             } else if(e.key==='Down') {
                 if($(lineadicomputo).next().length) {
-                    var inputsonline = $(lineadicomputo).next().children('.shown').children();
+                    inputsonline = $(lineadicomputo).next().children('.shown').children();
                     if($(inputsonline).length > currentcolumn) {
-                        $(inputsonline[currentcolumn]).focus()
+                        $(inputsonline[currentcolumn]).focus();
                     } else {
                         $(lineadicomputo).next().children().children(".getsfocus").focus();
                     }
                 }
             } else if(e.ctrlKey) {
                 var circledDiv = $(lineadicomputo).children(".tipolinea");
+                var selector = false;
                 switch(e.charCode) {
-                case 99:
-                    choose($(circledDiv).children("[lettera='.codice']"));
-                    $(lineadicomputo).children(".codice").children().focus();
-                    break;
-                case 100:
-                    choose($(circledDiv).children("[lettera='.descrizione']"));
-                    $(lineadicomputo).children(".descrizione").children().focus();
-                    break;
-                case 102:
-                    choose($(circledDiv).children("[lettera='.fattori']"));
-                    $(lineadicomputo).children(".fattori").children(".qq").focus();
-                    break;
-                case 114:
-                    choose($(circledDiv).children("[lettera='.relativo']"));
-                    $(lineadicomputo).children(".relativo").children(".qq").focus();
-                    break;
+                case 99: selector = '.codice'; break;
+                case 100: selector = '.descrizione'; break;
+                case 102: selector = '.fattori'; break;
+                case 114: selector = '.relativo'; break;
                 }
-                e.preventDefault();
+                if (selector !== false){
+                    choose($(circledDiv).children("[lettera='" + selector + "']"));
+                    $(lineadicomputo).children(selector).children(".getsfocus").focus();
+                    e.preventDefault();
+                }
             }
         });
         
@@ -136,10 +139,10 @@ function load_computo(computo) {
                                       onclick: "$($(this).parent().children('.shown').children()[0]).focus();",
                                     });
         lineadicomputo.append(tipolinea);
-        $.each([{l: 'codice', t: 'Ⓒ'},
-                {l: 'descrizione', t: 'Ⓓ'},
-                {l: 'fattori', t: 'Ⓕ'},
-                {l: 'relativo', t: 'Ⓡ'},
+        $.each([{t: 'Ⓒ', l: 'codice',},
+                {t: 'Ⓓ', l: 'descrizione',},
+                {t: 'Ⓕ', l: 'fattori',},
+                {t: 'Ⓡ', l: 'relativo',},
                ], function(ignore, tipo) {
                    var elm = $("<div/>", { class: "choose",
                                            lettera: "." + tipo.l,
@@ -169,7 +172,7 @@ function load_computo(computo) {
                        case 'fattori':
                        case 'relativo':
                            input.addClass('fattore');
-                           onfocus += "currentcolumn="+j+";"
+                           onfocus += "currentcolumn=" + j + ";$(this).select();";
                            break;
                        case 'descrizione':
                            input.addClass('ds');
@@ -207,7 +210,10 @@ function load_computo(computo) {
 }
 
 function init_socket() {
-    socket.on('load', load_computo );
+    socket = io.connect(window.location.href);
+    socket.on('load', receive_computo );
+    socket.on('connect', console.log('connect'));
+    socket.on('disconnect', console.log('disconnect'));
 }
 
 // to be called at document ready!
@@ -216,10 +222,7 @@ function init() {
     // ---------------------------
     // initialize global variables
 
-    // open the communication socket!!!
-    socket = io.connect(window.location.href);
-
     init_socket();
 
-    $(document)
+    $(document);
 }

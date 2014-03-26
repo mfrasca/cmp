@@ -27,99 +27,50 @@ app.get("/", function(req, res){
     res.render("accueil");
 });
 
+var mongo = require('mongodb');
+
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/test';
+
 var io = require('socket.io').listen(app.listen(port, function() {
             console.log("Listening on " + port);
         }));
 
 io.sockets.on('connection', function (socket) {
     socket.on('load', function(params) {
-        socket.emit('load', computo);
+        console.log(params);
+        mongo.Db.connect(
+            mongoUri, 
+            function (err, db) {
+                db.collection(
+                    'mydocs', 
+                    function(er, collection) {
+                        collection.findOne(
+                            params,
+                            function(er,rs) {
+                                console.log(rs);
+                                socket.emit('load', rs);
+                            });
+                    });
+            });
     });
 
     socket.on('save', function(params) {
-        computo = params.computo;
+        console.log(params);
+        mongo.Db.connect(
+            mongoUri, 
+            function (err, db) {
+                db.collection(
+                    'mydocs', 
+                    function(er, collection) {
+                        collection.update(
+                            { nome: params.nome },
+                            { $set: params }, 
+                            { upsert: true }, 
+                            function(er,rs) {
+                            });
+                    });
+            });
     });
 });
-
-var computo = [
-    { tipo: 'codice',
-      codice: '01 001',
-    },
-    { tipo: 'descrizione',
-      desc: 'descrizione dell\'articolo riferito',
-    },
-    { tipo: 'fattori',
-      qq: 1,
-      ln: 1.0,
-      lr: 0.0,
-      hh: 0.0,
-    },
-    { tipo: 'fattori',
-      qq: 1,
-      ln: 1.0,
-      lr: 0.0,
-      hh: 0.0,
-    },
-    { tipo: 'fattori',
-      qq: 1,
-      ln: 1.0,
-      lr: 0.0,
-      hh: 0.0,
-    },
-    { tipo: 'fattori',
-      qq: 1,
-      ln: 1.0,
-      lr: 0.0,
-      hh: 0.0,
-    },
-    { tipo: 'descrizione',
-      desc: 'descrizione dell\'articolo riferito',
-    },
-    { tipo: 'fattori',
-      qq: 1,
-      ln: 1.0,
-      lr: 0.0,
-      hh: 0.0,
-    },
-    { tipo: 'descrizione',
-      desc: 'descrizione dell\'articolo riferito',
-    },
-    { tipo: 'fattori',
-      qq: 2,
-      ln: 1.0,
-      lr: 4.0,
-      hh: 0.0,
-    },
-    { tipo: 'fattori',
-      qq: 2,
-      ln: 1.0,
-      lr: 4.0,
-      hh: 0.0,
-    },
-    { tipo: 'fattori',
-      qq: 1,
-      ln: 1.0,
-      lr: 0.0,
-      hh: 0.0,
-    },
-    { tipo: 'codice',
-      codice: '01 002',
-    },
-    { tipo: 'descrizione',
-      desc: 'descrizione dell\'articolo riferito',
-    },
-    { tipo: 'fattori',
-      qq: 1,
-      ln: 1.0,
-      lr: 0.0,
-      hh: 0.0,
-    },
-    { tipo: 'descrizione',
-      desc: 'descrizione dell\'articolo riferito',
-    },
-    { tipo: 'relativo',
-      qq: 1,
-      ln: 1.0,
-    },
-];
-
