@@ -57,7 +57,7 @@ function save_computo() {
     $.each($("#computo").children(), function(index, elemento) {
         var linea;
         linea = {};
-        linea.tipo = ($(elemento).children(".shown").attr("id").split("-")[2]);
+        linea.tipo = ($(elemento).children(".shown").attr("id").split("-")[3]);
         switch(linea.tipo) {
         case "codice":
             linea.codice = $(elemento).children(".codice").children("input").val();
@@ -223,9 +223,7 @@ function receive_computo(params) {
         var id_linea = "l-" + (10000 + index).toFixed(0).substr(1) + "-00";
         var lineadicomputo = create_linea_di_computo(id_linea, linea.tipo);
         $("#computo").append(lineadicomputo);
-        var obj = $('#' + id_linea + '-' + linea.tipo);
-        obj.removeClass('hidden');
-        obj.addClass('shown');
+        var obj = $(lineadicomputo).children('.shown');
         switch(linea.tipo) {
         case 'codice':
             obj.children('input').attr({value: linea.codice});
