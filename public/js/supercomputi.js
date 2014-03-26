@@ -209,14 +209,14 @@ function receive_computo(params) {
             obj.children('input').attr({value: linea.descrizione});
             break;
         case 'fattori':
-            obj.children('input#qq').attr({value: linea.qq});
-            obj.children('input#ln').attr({value: linea.ln});
-            obj.children('input#lr').attr({value: linea.lr});
-            obj.children('input#hh').attr({value: linea.hh});
+            obj.children('input.qq').attr({value: linea.qq});
+            obj.children('input.ln').attr({value: linea.ln});
+            obj.children('input.lr').attr({value: linea.lr});
+            obj.children('input.hh').attr({value: linea.hh});
             break;
         case 'relativo':
-            obj.children('input#qq').attr({value: linea.qq});
-            obj.children('input#ln').attr({value: linea.ln});
+            obj.children('input.qq').attr({value: linea.qq});
+            obj.children('input.ln').attr({value: linea.ln});
             break;
         }
     });
