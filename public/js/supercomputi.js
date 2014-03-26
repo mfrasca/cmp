@@ -129,7 +129,8 @@ function create_linea_di_computo(id_linea, tipocdfr) {
                 var beforeThis = $(lineadicomputo);
                 if (e.charCode === 110)
                     beforeThis = $(beforeThis).next();
-                var nuovalinea = create_linea_di_computo('l-1111-11', 'codice');
+                // TODO interpolare il codice di linea
+                var nuovalinea = create_linea_di_computo('l-1111-11', 'fattori');
                 $(nuovalinea).insertBefore(beforeThis);
                 e.preventDefault();
                 break;
