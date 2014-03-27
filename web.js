@@ -84,6 +84,7 @@ io.sockets.on('connection', function (socket) {
                         console.log(params);
                         collection.find(
                             params,
+                            {'computo': 0}, // do not want to receive the actual data
                             function(er,rs) {
                                 rs.toArray(function(er, docs) {
                                     socket.emit('found', docs);                                    
