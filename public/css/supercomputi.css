@@ -53,3 +53,22 @@
 .grayed {
     background-color:#2f2f2f;
 }
+.control-label {
+    vertical-align: middle;
+    line-heigth: 2em;
+    width:7em;
+    float:left;
+    cursor:default;
+}
+.filter-field {
+    margin-bottom: 0px;
+}
+.file-to-select {
+    float:left;
+    width:9em;
+    height:2em;
+    cursor:default;
+}
+.lista-computi-filtrati {
+    clear:both;
+}

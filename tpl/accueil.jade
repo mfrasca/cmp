@@ -25,7 +25,9 @@ body
               ul#file-menu-list.dropdown-menu
                 li
                   a(href='#', onclick="create_computo();") new
-                  a(href='#', onclick="request_computo();") open
+                li
+                  a(href='#', onclick="fireSelectComputo();") open
+                li
                   a(href='#', onclick="save_computo();") save
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -37,3 +39,25 @@ body
                   a(href='#', onclick="request_tariffa();") review
 
   #computo(style="margin-top:3em;background-color:inherit;")
+
+  #selectComputoModal.modal.hide.fade
+    .modal-header
+      button.close(type='button', data-dismiss='modal') ×
+      h3 filtra e scegli il computo da modificare
+    .modal-body
+      div(style="clear:both;line-height:2em;")
+        .control-label committente
+        input#filter-committente.field(name='committente', type='text')
+      div(style="clear:both;line-height:2em;")
+        .control-label cantiere
+        input#filter-cantiere.field(name='cantiere', type='text')
+      div(style="clear:both;line-height:2em;")
+        .control-label S.A.L.
+        input#filter-sal.field(name='sal', type='text')
+      div(style="clear:both;line-height:2em;")
+        .control-label nome
+        input#filter-nome.field(style="margin-bottom:10pt;", name='nome', type='text')
+        a.btn.btn-primary(style="margin-left:3em;margin-bottom:10pt;", href='#' onclick="applyFilterComputo(); return false;") filtra
+      hr(style="padding-top:0;margin-top:0;")
+      #lista-computi-filtrati
+      // 

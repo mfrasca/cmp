@@ -73,4 +73,23 @@ io.sockets.on('connection', function (socket) {
                     });
             });
     });
+
+    socket.on('find', function(params) {
+        mongo.Db.connect(
+            mongoUri, 
+            function (err, db) {
+                db.collection(
+                    'mydocs', 
+                    function(er, collection) {
+                        console.log(params);
+                        collection.find(
+                            params,
+                            function(er,rs) {
+                                rs.toArray(function(er, docs) {
+                                    socket.emit('found', docs);                                    
+                                });
+                            });
+                    });
+            });
+    });
 });

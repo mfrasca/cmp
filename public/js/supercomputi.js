@@ -19,6 +19,8 @@
 // GLOBAL VARIABLES
 
 var socket;
+var filtro;
+var nome_computo;
 
 //
 // GLOBAL FUNCTIONS
@@ -51,6 +53,35 @@ function choose(obj) {
     $(linea).children($(obj).attr("lettera")).removeClass("hidden");
 }
 
+function fireSelectComputo() {
+    $("#lista-computi-filtrati").empty();
+    $('#selectComputoModal').modal('show');
+}
+
+function applyFilterComputo() {
+    var computi_filtrati = $("#lista-computi-filtrati");
+    $(computi_filtrati).empty();
+    var filter = {};
+    var label = ['committente', 'cantiere', 'sal', 'nome'];
+    for (var f = 0; f<label.length; f++)
+        if ($('#filter-' + label[f]).val())
+            filter[label[f]] = $('#filter-' + label[f]).val();
+    socket.emit('find', filter);
+}
+
+function receive_found(params) {
+    console.log(params);
+    var computi_filtrati = $("#lista-computi-filtrati");
+    for (var i = 0; i < params.length; i++) {
+        var elem = $("<div/>", { class: 'file-to-select',
+                                 onclick: "$('#selectComputoModal').modal('hide'); request_computo($(this)); return false;",
+                                 value: params[i].nome,
+                               });
+        elem.text(params[i].nome);
+        $(computi_filtrati).append(elem);
+    }
+}
+
 function save_computo() {
     var result = [];
 
@@ -79,7 +110,7 @@ function save_computo() {
         result.push(linea);
     });
     console.log(result);
-    socket.emit('save', { nome: 'irrilevante',
+    socket.emit('save', { nome: nome_computo,
                           computo: result
                         });
 }
@@ -211,9 +242,9 @@ function create_computo() {
     currentcolumn = 0;
 }
 
-function request_computo() {
+function request_computo(that) {
     $('#computo').empty();
-    socket.emit('load', {nome: 'irrilevante'});
+    socket.emit('load', { nome: $(that).attr('value') });
 }
 
 function receive_computo(params) {
@@ -253,6 +284,7 @@ function init_socket() {
     socket.on('load', receive_computo );
     socket.on('connect', console.log('connect'));
     socket.on('disconnect', console.log('disconnect'));
+    socket.on('found', receive_found);
 }
 
 // to be called at document ready!
