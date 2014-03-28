@@ -22,7 +22,7 @@ body
                 i.icon-folder-open.icon-white
                 |  computo
                 b.caret
-              ul#file-menu-list.dropdown-menu
+              ul#computo-menu-list.dropdown-menu
                 li
                   a(href='#', onclick="create_computo();") nuovo
                 li
@@ -32,23 +32,36 @@ body
                 i.icon-th-list.icon-white
                 |  tariffa
                 b.caret
-              ul#toggle-menu-list.dropdown-menu
+              ul#tariffa-menu-list.dropdown-menu
                 li
-                  a(href='#', onclick="request_tariffa();") rivista
+                  a(href='#', onclick="request_tariffa();") consulta
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.icon-print.icon-white
-                |  stampe
+                |  stampa
                 b.caret
-              ul#toggle-menu-list.dropdown-menu
+              ul#stampa-menu-list.dropdown-menu
                 li
                   a(href='#', onclick="stampa_libretto();") libretto
                 li
-                  a(href='#', onclick="stampa_libretto();") registro
+                  a(href='#', onclick="stampa_libretto();") - estimativo
                 li
-                  a(href='#', onclick="stampa_libretto();") sommario
+                  a(href='#', onclick="stampa_registro();") registro
+                li
+                  a(href='#', onclick="stampa_sommario();") sommario
 
-  #computo(style="margin-top:3em;background-color:inherit;")
+
+  #editComputoModal.modal.hide.fade.broader-window
+    .modal-header
+      button.close(type='button', data-dismiss='modal') ×
+      h3 edit computo
+    .modal-body
+      #computo
+    .modal-footer
+      button.btn(data-dismiss='modal') annulla e chiudi
+      button.btn(data-dismiss='modal') salva e continua
+      button.btn(data-dismiss='modal') salva e chiudi
+
 
   #selectComputoModal.modal.hide.fade
     .modal-header

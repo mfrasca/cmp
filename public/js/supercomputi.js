@@ -236,9 +236,10 @@ function create_linea_di_computo(id_linea, tipocdfr) {
 
 function create_computo() {
     $('#computo').empty();
+    $('#editComputoModal').modal('show');
     var lineadicomputo = create_linea_di_computo('l-0000-00', 'codice');
     $("#computo").append(lineadicomputo);
-    $("#l-0000-00").children().children(".getsfocus").focus();
+    $("#l-0000-00").children(".shown").children(".getsfocus").focus();
     currentcolumn = 0;
 }
 
@@ -249,6 +250,7 @@ function request_computo(that) {
 
 function receive_computo(params) {
     $("#computo").empty();
+    $('#editComputoModal').modal('show');
     $("#computo").removeClass('grayed');
     
     $.each(params.computo, function(index, linea) {
@@ -275,7 +277,7 @@ function receive_computo(params) {
             break;
         }
     });
-    $("#l-0000-00").children().children(".getsfocus").focus();
+    $("#l-0000-00").children(".shown").children(".getsfocus").focus();
     currentcolumn = 0;
 }
 
