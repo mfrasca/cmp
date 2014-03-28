@@ -56,7 +56,14 @@ body
       button.close(type='button', data-dismiss='modal') ×
       h3 edit computo
     .modal-body
-      #computo
+     .right-pane(style="float:right;width:25%;margin-left:65%;position:fixed;")
+        #tariffa-descrizione descrizione dell&apos;articolo
+        #computo-committente
+        #computo-cantiere
+        #computo-sal
+        #computo-nome
+      #abc(style="clear:both;")
+      #computo.left-pane(style="height:65%;width:65%;float:left;")
     .modal-footer
       button.btn(data-dismiss='modal') annulla e chiudi
       button.btn(data-dismiss='modal') salva e continua
@@ -83,4 +90,3 @@ body
         a.btn.btn-primary(style="margin-left:3em;margin-bottom:10pt;", href='#' onclick="applyFilterComputo(); return false;") filtra
       hr(style="padding-top:0;margin-top:0;")
       #lista-computi-filtrati
-      // 

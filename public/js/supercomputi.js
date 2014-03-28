@@ -252,6 +252,11 @@ function receive_computo(params) {
     $("#computo").empty();
     $('#editComputoModal').modal('show');
     $("#computo").removeClass('grayed');
+
+    $("#computo-committente").text(params.committente);
+    $("#computo-cantiere").text(params.cantiere);
+    $("#computo-sal").text(params.sal);
+    $("#computo-nome").text(params.nome);
     
     $.each(params.computo, function(index, linea) {
         var id_linea = "l-" + (10000 + index).toFixed(0).substr(1) + "-00";
