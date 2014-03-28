@@ -65,10 +65,12 @@
 }
 .file-to-select {
     float:left;
-    width:9em;
-    height:2em;
+    width:10em;
+    height:1.25em;
     cursor:default;
+    margin: 2pt 2pt 0 2pt
 }
 .lista-computi-filtrati {
     clear:both;
+    overflow: scroll;
 }

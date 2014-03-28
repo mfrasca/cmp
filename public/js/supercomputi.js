@@ -73,7 +73,7 @@ function receive_found(params) {
     console.log(params);
     var computi_filtrati = $("#lista-computi-filtrati");
     for (var i = 0; i < params.length; i++) {
-        var elem = $("<div/>", { class: 'file-to-select',
+        var elem = $("<div/>", { class: 'file-to-select btn',
                                  onclick: "$('#selectComputoModal').modal('hide'); request_computo($(this)); return false;",
                                  value: params[i]._id,
                                });

@@ -24,11 +24,9 @@ body
                 b.caret
               ul#file-menu-list.dropdown-menu
                 li
-                  a(href='#', onclick="create_computo();") new
+                  a(href='#', onclick="create_computo();") nuovo
                 li
-                  a(href='#', onclick="fireSelectComputo();") open
-                li
-                  a(href='#', onclick="save_computo();") save
+                  a(href='#', onclick="fireSelectComputo();") apri
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
                 i.icon-th-list.icon-white
@@ -36,7 +34,19 @@ body
                 b.caret
               ul#toggle-menu-list.dropdown-menu
                 li
-                  a(href='#', onclick="request_tariffa();") review
+                  a(href='#', onclick="request_tariffa();") rivista
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                i.icon-print.icon-white
+                |  stampe
+                b.caret
+              ul#toggle-menu-list.dropdown-menu
+                li
+                  a(href='#', onclick="stampa_libretto();") libretto
+                li
+                  a(href='#', onclick="stampa_libretto();") registro
+                li
+                  a(href='#', onclick="stampa_libretto();") sommario
 
   #computo(style="margin-top:3em;background-color:inherit;")
 
