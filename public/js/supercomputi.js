@@ -75,7 +75,7 @@ function receive_found(params) {
     for (var i = 0; i < params.length; i++) {
         var elem = $("<div/>", { class: 'file-to-select',
                                  onclick: "$('#selectComputoModal').modal('hide'); request_computo($(this)); return false;",
-                                 value: params[i].nome,
+                                 value: params[i]._id,
                                });
         elem.text(params[i].nome);
         $(computi_filtrati).append(elem);
@@ -244,7 +244,7 @@ function create_computo() {
 
 function request_computo(that) {
     $('#computo').empty();
-    socket.emit('load', { nome: $(that).attr('value') });
+    socket.emit('load', $(that).attr('value'));
 }
 
 function receive_computo(params) {

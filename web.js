@@ -28,6 +28,7 @@ app.get("/", function(req, res){
 });
 
 var mongo = require('mongodb');
+var ObjectID = require('mongodb').ObjectID;
 
 var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
@@ -38,8 +39,7 @@ var io = require('socket.io').listen(app.listen(port, function() {
         }));
 
 io.sockets.on('connection', function (socket) {
-    socket.on('load', function(params) {
-        console.log(params);
+    socket.on('load', function(id) {
         mongo.Db.connect(
             mongoUri, 
             function (err, db) {
@@ -47,7 +47,7 @@ io.sockets.on('connection', function (socket) {
                     'mydocs', 
                     function(er, collection) {
                         collection.findOne(
-                            params,
+                            {_id: new ObjectID(id)},
                             function(er,rs) {
                                 console.log(rs);
                                 socket.emit('load', rs);
