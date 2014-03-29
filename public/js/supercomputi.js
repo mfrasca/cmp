@@ -227,6 +227,9 @@ function create_linea_di_computo(id_linea, tipocdfr) {
                        input.addClass('ds');
                        break;
                    }
+                   if(j>0){
+                       $(input).attr('onblur', "check_number($(this), 2);");
+                   }
                    $(input).attr('onfocus', onfocus);
                    part.append(input);
                });
@@ -236,6 +239,14 @@ function create_linea_di_computo(id_linea, tipocdfr) {
     obj.addClass('shown');
 
     return lineadicomputo;
+}
+
+function check_number(that, decimals) {
+    var value = $(that).val();
+    if(value) {
+        value = parseFloat(Math.round(value * 100) / 100).toFixed(2);
+        $(that).val(value);
+    }
 }
 
 function create_computo() {

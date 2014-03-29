@@ -73,9 +73,9 @@ body
       div(style="clear:both;")
       #computo.left-pane(style="height:65%;width:65%;float:left;")
     .modal-footer
-      button.btn(data-dismiss='modal') annulla e chiudi
+      button.btn(onclick="$('l-0000-00').focus();" data-dismiss='modal') annulla e chiudi
       button.btn(href='#' onclick="save_computo(); return false;") salva e continua
-      button.btn(data-dismiss='modal', href='#' onclick="save_computo(); return false;") salva e chiudi
+      button.btn(data-dismiss='modal', href='#' onclick="$('l-0000-00').focus(); save_computo(); return false;") salva e chiudi
 
 
   #selectComputoModal.modal.hide.fade
