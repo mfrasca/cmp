@@ -56,18 +56,26 @@ body
       button.close(type='button', data-dismiss='modal') ×
       h3 edit computo
     .modal-body
-     .right-pane(style="float:right;width:25%;margin-left:65%;position:fixed;")
+     .right-pane(style="margin-left:63%;position:fixed;")
+        div(style="clear:both;line-height:2em;")
+          .control-label committente
+          input#computo-committente.field(name='committente', type='text')
+        div(style="clear:both;line-height:2em;")
+          .control-label cantiere
+          input#computo-cantiere.field(name='cantiere', type='text')
+        div(style="clear:both;line-height:2em;")
+          .control-label S.A.L.
+          input#computo-sal.field(name='sal', type='text')
+        div(style="clear:both;line-height:2em;")
+          .control-label nome
+          input#computo-nome.field(style="margin-bottom:10pt;", name='nome', type='text')
         #tariffa-descrizione descrizione dell&apos;articolo
-        #computo-committente
-        #computo-cantiere
-        #computo-sal
-        #computo-nome
-      #abc(style="clear:both;")
+      div(style="clear:both;")
       #computo.left-pane(style="height:65%;width:65%;float:left;")
     .modal-footer
       button.btn(data-dismiss='modal') annulla e chiudi
-      button.btn(data-dismiss='modal') salva e continua
-      button.btn(data-dismiss='modal') salva e chiudi
+      button.btn(href='#' onclick="save_computo(); return false;") salva e continua
+      button.btn(data-dismiss='modal', href='#' onclick="save_computo(); return false;") salva e chiudi
 
 
   #selectComputoModal.modal.hide.fade

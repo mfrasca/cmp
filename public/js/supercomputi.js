@@ -111,7 +111,11 @@ function save_computo() {
     });
     console.log(result);
     socket.emit('save', { nome: nome_computo,
-                          computo: result
+                          computo: result,
+                          committente: $("#computo-committente").val(),
+                          cantiere: $("#computo-cantiere").val(),
+                          sal: $("#computo-sal").val(),
+                          nome: $("#computo-nome").val(),
                         });
 }
 
@@ -253,10 +257,10 @@ function receive_computo(params) {
     $('#editComputoModal').modal('show');
     $("#computo").removeClass('grayed');
 
-    $("#computo-committente").text(params.committente);
-    $("#computo-cantiere").text(params.cantiere);
-    $("#computo-sal").text(params.sal);
-    $("#computo-nome").text(params.nome);
+    $("#computo-committente").val(params.committente);
+    $("#computo-cantiere").val(params.cantiere);
+    $("#computo-sal").val(params.sal);
+    $("#computo-nome").val(params.nome);
     
     $.each(params.computo, function(index, linea) {
         var id_linea = "l-" + (10000 + index).toFixed(0).substr(1) + "-00";
