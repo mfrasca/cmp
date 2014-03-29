@@ -112,6 +112,7 @@ function save_computo() {
     console.log(result);
     socket.emit('save', { nome: nome_computo,
                           computo: result,
+                          // _id: $("#computo-id").val(),
                           committente: $("#computo-committente").val(),
                           cantiere: $("#computo-cantiere").val(),
                           sal: $("#computo-sal").val(),
@@ -251,6 +252,7 @@ function check_number(that, decimals) {
 
 function create_computo() {
     $('#computo').empty();
+    $('#computo-id').val("");
     $('#editComputoModal').modal('show');
     var lineadicomputo = create_linea_di_computo('l-0000-00', 'codice');
     $("#computo").append(lineadicomputo);
@@ -268,6 +270,7 @@ function receive_computo(params) {
     $('#editComputoModal').modal('show');
     $("#computo").removeClass('grayed');
 
+    $("#computo-id").val(params._id);
     $("#computo-committente").val(params.committente);
     $("#computo-cantiere").val(params.cantiere);
     $("#computo-sal").val(params.sal);
@@ -307,6 +310,7 @@ function init_socket() {
     socket.on('connect', console.log('connect'));
     socket.on('disconnect', console.log('disconnect'));
     socket.on('found', receive_found);
+    socket.on('set_id', function(new_id) {console.log(new_id); $("#computo-id").val(new_id);});
 }
 
 // to be called at document ready!
