@@ -171,8 +171,12 @@ function create_linea_di_computo(id_linea, tipocdfr) {
                 $(nuovalinea).insertBefore(beforeThis);
                 e.preventDefault();
                 break;
-            case 120: // x
+            case 120: /* x */
                 var nextactive = $(lineadicomputo).next();
+                if(!$(nextactive).length)
+                    nextactive = $(lineadicomputo).prev();
+                if(!$(nextactive).length)
+                    break;
                 $(lineadicomputo).remove();
                 $(nextactive).addClass('selected');
                 $(nextactive).children().children(".getsfocus").focus();
