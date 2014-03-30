@@ -39,7 +39,7 @@ var io = require('socket.io').listen(app.listen(port, function() {
         }));
 
 io.sockets.on('connection', function (socket) {
-    socket.on('load', function(id) {
+    socket.on('load', function(_id) {
         mongo.Db.connect(
             mongoUri, 
             function (err, db) {
@@ -47,7 +47,7 @@ io.sockets.on('connection', function (socket) {
                     'mydocs', 
                     function(er, collection) {
                         collection.findOne(
-                            {_id: new ObjectID(id)},
+                            {_id: new ObjectID(_id)},
                             function(er,rs) {
                                 console.log(rs);
                                 socket.emit('load', rs);
@@ -64,12 +64,24 @@ io.sockets.on('connection', function (socket) {
                 db.collection(
                     'mydocs', 
                     function(er, collection) {
-                        collection.update(
-                            { nome: params.nome },
-                            { $set: params }, 
-                            { upsert: true }, 
-                            function(er,rs) {
-                            });
+                        if(params._id) {
+                            var _id = new ObjectID(params._id);
+                            delete params._id;
+                            collection.findAndModify(
+                                { _id: _id },
+                                null,
+                                { $set: params }, 
+                                { upsert: true }, 
+                                function(er,rs) {
+                                });
+                        } else {
+                            collection.insert(
+                                params, 
+                                function(er,docs) {
+                                    console.log("result from findAndModify", docs);
+                                    socket.emit("set_id", docs[0]._id);
+                                });
+                        }
                     });
             });
     });

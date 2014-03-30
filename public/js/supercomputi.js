@@ -20,7 +20,6 @@
 
 var socket;
 var filtro;
-var nome_computo;
 
 //
 // GLOBAL FUNCTIONS
@@ -109,15 +108,17 @@ function save_computo() {
         }
         result.push(linea);
     });
-    console.log(result);
-    socket.emit('save', { nome: nome_computo,
-                          computo: result,
-                          // _id: $("#computo-id").val(),
-                          committente: $("#computo-committente").val(),
-                          cantiere: $("#computo-cantiere").val(),
-                          sal: $("#computo-sal").val(),
-                          nome: $("#computo-nome").val(),
-                        });
+    var document = { computo: result,
+                     committente: $("#computo-committente").val(),
+                     cantiere: $("#computo-cantiere").val(),
+                     sal: $("#computo-sal").val(),
+                     nome: $("#computo-nome").val(),
+                   };
+    if( $("#computo-id").val() )
+        document._id = $("#computo-id").val();
+    console.log(document);
+        
+    socket.emit('save', document);
 }
 
 function create_linea_di_computo(id_linea, tipocdfr) {
@@ -156,7 +157,7 @@ function create_linea_di_computo(id_linea, tipocdfr) {
             var circledDiv = $(lineadicomputo).children(".tipolinea");
             var selector = false;
             switch(e.charCode) {
-            case  99: /* c */ selector = '.codice'; break;
+            case 107: /* k */ selector = '.codice'; break;
             case 100: /* d */ selector = '.descrizione'; break;
             case 102: /* f */ selector = '.fattori'; break;
             case 114: /* r */ selector = '.relativo'; break;
@@ -252,7 +253,7 @@ function check_number(that, decimals) {
 
 function create_computo() {
     $('#computo').empty();
-    $('#computo-id').val("");
+    $("#computo-dettagli").children().children("input").val("");
     $('#editComputoModal').modal('show');
     var lineadicomputo = create_linea_di_computo('l-0000-00', 'codice');
     $("#computo").append(lineadicomputo);
