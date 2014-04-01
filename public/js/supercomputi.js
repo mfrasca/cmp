@@ -37,6 +37,26 @@ String.prototype.formatU = function() {
     return str;
 };
 
+function show_help(quale) {
+    var text = {
+        cosa: 'cmp è un programma per la gestione di una contabilità lavori, dalla fase preventiva a quella di fatturazione. <br/>a suo tempo, circa 25 anni fa, cmp era un programma scritto in turbo pascal ed utilizzato da due o tre gruppi di geometri a Napoli, ora lo stiamo riscrivendo in forma di software come servizio.<hr/>al momento cmp funziona solo con firefox. in prospettiva, anche con chrome ed opera. non ho modo di testarlo né con safari né ie.',
+        come: 'in fase inserimento computi:<ul><li>ctrl-k: ->codice</li><li>ctrl-d: ->descrizione</li><li>ctrl-f: ->fattori</li><li>ctrl-r: ->relativo</li><li>ctrl-x: rimuove la linea corrente.</li><li>ctrl-o: inserisce una linea prima di quella corrente.</li><li>ctrl-n: inserisce una linea dopo di quella corrente</li><li>cursore a scendere: prossima linea (o inseriscine una).</li><li>cursore a salire: linea precedente</li><li>tab: prossimo campo</li><li>shift-tab: campo precedente</li></ul>.',
+        chi: "questo programma è sviluppato da Mario Frasca, con la consulenza professionale di suo padre Angelo (geometra) e di vari di lui colleghi dell'area napoletana.<br/>è questo il posto per mettere la lista dei collaboratori?<br/>per scrivere all'autore: mario (at) anche (punto) no",
+        dove: 'lo sviluppo di cmp è pubblico, <br/>lo puoi seguire su <a href="http://github.com/mfrasca/cmp">http://github.com/mfrasca/cmp</a>. <br/>sempre su github, puoi proporre <a href="http://github.com/mfrasca/cmp/issues">modifiche e migliorie</a>.',
+        quando: 'work in progress! :)<br/>i prossimi passi? verifica le <a href="https://github.com/mfrasca/cmp/issues/milestones">pietre miliari</a>.',
+    };
+     
+    $('#help-div').empty();
+  
+    var elem = $('<div/>');
+    elem.html(text[quale]);
+
+    $('#help-div').append(elem);
+    $('#helpModal .modal-header h3').text("help - " + quale)
+    $('#helpModal').modal('show');
+    
+}
+
 function choose(obj) {
 // make the line at obj be of obj type
 //
@@ -126,8 +146,9 @@ function create_linea_di_computo(id_linea, tipocdfr) {
                                        class: "lineadicomputo",
                                      });
     var inputsonline;
-    $(lineadicomputo).keypress(function(e) {
-        if(e.key==='Up') {
+    $(lineadicomputo).bind('keydown', function(e) {
+        var nuovalinea;
+        if(e.keyCode===$.ui.keyCode.UP) {
             if($(lineadicomputo).prev().length) {
                 inputsonline = $(lineadicomputo).prev().children('.shown').children();
                 if($(inputsonline).length > currentcolumn) {
@@ -136,7 +157,7 @@ function create_linea_di_computo(id_linea, tipocdfr) {
                     $(lineadicomputo).prev().children().children(".getsfocus").focus();
                 }
             }
-        } else if(e.key==='Down') {
+        } else if(e.keyCode===$.ui.keyCode.DOWN) {
             if($(lineadicomputo).next().length === 0) {
                 // siamo sull'ultima linea del computo
                 var prossimotipodilinea = 'descrizione';
@@ -144,7 +165,7 @@ function create_linea_di_computo(id_linea, tipocdfr) {
                     prossimotipodilinea = 'fattori';
                 var ultimonumerodilinea = parseInt($(lineadicomputo).attr("id").split('-')[1]);
                 var id_linea = "l-" + (10001 + ultimonumerodilinea).toFixed(0).substr(1) + "-00";
-                var nuovalinea = create_linea_di_computo(id_linea, prossimotipodilinea);
+                nuovalinea = create_linea_di_computo(id_linea, prossimotipodilinea);
                 $(lineadicomputo).parent().append(nuovalinea);
             }
             inputsonline = $(lineadicomputo).next().children('.shown').children();
@@ -156,22 +177,25 @@ function create_linea_di_computo(id_linea, tipocdfr) {
         } else if(e.ctrlKey) {
             var circledDiv = $(lineadicomputo).children(".tipolinea");
             var selector = false;
-            switch(e.charCode) {
-            case 107: /* k */ selector = '.codice'; break;
-            case 100: /* d */ selector = '.descrizione'; break;
-            case 102: /* f */ selector = '.fattori'; break;
-            case 114: /* r */ selector = '.relativo'; break;
-            case 110: // n
-            case 111: // o
+            switch(e.keyCode) {
+                // 6    7         8         9
+                // 56789012345678901234567890
+                // abcdefghijklmnopqrtsuvwxyz
+            case 75: /* k */ selector = '.codice'; break;
+            case 68: /* d */ selector = '.descrizione'; break;
+            case 70: /* f */ selector = '.fattori'; break;
+            case 82: /* r */ selector = '.relativo'; break;
+            case 78: /* n */
+            case 79: /* o */
                 var beforeThis = $(lineadicomputo);
                 if (e.charCode === 110)
                     beforeThis = $(beforeThis).next();
                 // TODO interpolare il codice di linea
-                var nuovalinea = create_linea_di_computo('l-1111-11', 'fattori');
+                nuovalinea = create_linea_di_computo('l-1111-11', 'fattori');
                 $(nuovalinea).insertBefore(beforeThis);
                 e.preventDefault();
                 break;
-            case 120: /* x */
+            case 88: /* x */
                 var nextactive = $(lineadicomputo).next();
                 if(!$(nextactive).length)
                     nextactive = $(lineadicomputo).prev();

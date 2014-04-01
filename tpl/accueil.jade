@@ -2,6 +2,7 @@ doctype html
 head
   script(src='/socket.io/socket.io.js')
   script(src='/lib/jquery-latest.min.js')
+  script(src='/lib/jquery-ui.js')
   script(src='/lib/bootstrap.min.js')
   script(src='/js/supercomputi.js')
   link(rel='stylesheet', href='/css/bootstrap.css')
@@ -49,6 +50,22 @@ body
                   a(href='#', onclick="stampa_registro();") registro
                 li
                   a(href='#', onclick="stampa_sommario();") sommario
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                i.icon-question-sign.icon-white
+                |  help
+                b.caret
+              ul#help-menu-list.dropdown-menu
+                li
+                  a(href='#', onclick="show_help('cosa');") cosa
+                li
+                  a(href='#', onclick="show_help('come');") come
+                li
+                  a(href='#', onclick="show_help('chi');") chi
+                li
+                  a(href='#', onclick="show_help('dove');") dove
+                li
+                  a(href='#', onclick="show_help('quando');") quando
 
 
   #editComputoModal.modal.hide.fade.broader-window
@@ -99,3 +116,12 @@ body
         a.btn.btn-primary(style="margin-left:3em;margin-bottom:10pt;", href='#' onclick="applyFilterComputo(); return false;") filtra
       hr(style="padding-top:0;margin-top:0;")
       #lista-computi-filtrati
+
+  #helpModal.modal.hide.fade
+    .modal-header
+      button.close(type='button', data-dismiss='modal') ×
+      h3 help
+    .modal-body#help-div
+    .modal-footer
+      button.btn(data-dismiss='modal') chiudi
+
