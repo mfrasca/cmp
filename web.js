@@ -29,6 +29,7 @@ app.get("/", function(req, res){
 
 var mongo = require('mongodb');
 var ObjectID = require('mongodb').ObjectID;
+var extend = require('util')._extend;
 
 var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
@@ -100,15 +101,16 @@ io.sockets.on('connection', function (socket) {
                         collection.findOne(
                             params,
                             function(er, rs) {
-                                result = rs;
+                                result = extend({}, rs);
                                 if(rs && rs.livello === 5 && rs.parent) {
                                     console.log("lookup parent of object: ", rs);
+                                    result.descrizione = "...\n" + rs.descrizione;
                                     collection.findOne(
                                         {_id: rs.parent},
                                         function(er, parent) {
                                             console.log("parent: ", parent);
                                             if(parent) {
-                                                result.descrizione = parent.descrizione + "\n" + result.descrizione;
+                                                result.descrizione = parent.descrizione + "\n" + rs.descrizione;
                                                 socket.emit('lookup', result);
                                             }
                                         });
