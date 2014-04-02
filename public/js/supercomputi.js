@@ -129,6 +129,7 @@ function save_computo() {
         result.push(linea);
     });
     var document = { computo: result,
+                     tariffa: $("#computo-tariffa").val(),
                      committente: $("#computo-committente").val(),
                      cantiere: $("#computo-cantiere").val(),
                      sal: $("#computo-sal").val(),
@@ -257,9 +258,12 @@ function create_linea_di_computo(id_linea, tipocdfr) {
                        input.addClass('ds');
                        break;
                    }
-                   if(j>0){
+                   if(j>0) {
                        $(input).attr('onblur', "check_number($(this), 2);");
                    }
+                   if(what==='cod') {
+                       $(input).attr('onblur', "lookup_codice($(this));");
+                   }                       
                    $(input).attr('onfocus', onfocus);
                    part.append(input);
                });
@@ -271,6 +275,12 @@ function create_linea_di_computo(id_linea, tipocdfr) {
     return lineadicomputo;
 }
 
+function lookup_codice(that) {
+    var codice = $(that).val();
+
+    socket.emit("lookup", $('#computo-tariffa').val(), codice);
+}
+
 function check_number(that, decimals) {
     var value = $(that).val();
     if(value) {
@@ -280,13 +290,24 @@ function check_number(that, decimals) {
 }
 
 function create_computo() {
-    $('#computo').empty();
-    $("#computo-dettagli").children().children("input").val("");
-    $('#editComputoModal').modal('show');
+    $("#computo-dettagli input").val("");
+    show_computo();
     var lineadicomputo = create_linea_di_computo('l-0000-00', 'codice');
     $("#computo").append(lineadicomputo);
     $("#l-0000-00").children(".shown").children(".getsfocus").focus();
     currentcolumn = 0;
+}
+
+function hide_computo() {
+    $('#computo-body').removeClass('shown');
+    $('#computo-body').addClass('hidden');
+}
+
+function show_computo() {
+    //$('#editComputoModal').modal('show');
+    $("#computo").empty();
+    $('#computo-body').addClass('shown');
+    $('#computo-body').removeClass('hidden');
 }
 
 function request_computo(that) {
@@ -294,12 +315,18 @@ function request_computo(that) {
     socket.emit('load', $(that).attr('value'));
 }
 
+function receive_articolo(params) {
+    console.log(params);
+    if(params)
+        $('#tariffa-descrizione').text(params.descrizione);
+}
+
 function receive_computo(params) {
-    $("#computo").empty();
-    $('#editComputoModal').modal('show');
+    show_computo();
     $("#computo").removeClass('grayed');
 
     $("#computo-id").val(params._id);
+    $("#computo-tariffa").val(params.tariffa);
     $("#computo-committente").val(params.committente);
     $("#computo-cantiere").val(params.cantiere);
     $("#computo-sal").val(params.sal);
@@ -335,6 +362,7 @@ function receive_computo(params) {
 
 function init_socket() {
     socket = io.connect(window.location.href);
+    socket.on('lookup', receive_articolo );
     socket.on('load', receive_computo );
     socket.on('connect', console.log('connect'));
     socket.on('disconnect', console.log('disconnect'));
@@ -349,6 +377,6 @@ function init() {
     // initialize global variables
 
     init_socket();
-
+    hide_computo();
     $(document);
 }

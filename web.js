@@ -86,6 +86,40 @@ io.sockets.on('connection', function (socket) {
             });
     });
 
+    socket.on('lookup', function(tariffa, codice) {
+        mongo.Db.connect(
+            mongoUri, 
+            function (err, db) {
+                db.collection(
+                    'tariffa',
+                    function(er, collection) {
+                        var params = { 'tariffa': tariffa,
+                                       'codice': codice,
+                                     };
+                        console.log(params);
+                        collection.findOne(
+                            params,
+                            function(er, rs) {
+                                result = rs;
+                                if(rs && rs.livello === 5 && rs.parent) {
+                                    console.log("lookup parent of object: ", rs);
+                                    collection.findOne(
+                                        {_id: rs.parent},
+                                        function(er, parent) {
+                                            console.log("parent: ", parent);
+                                            if(parent) {
+                                                result.descrizione = parent.descrizione + "\n" + result.descrizione;
+                                                socket.emit('lookup', result);
+                                            }
+                                        });
+                                }
+                                console.log("reconstructed result: ", result);
+                                socket.emit('lookup', result);
+                            });
+                    });
+            });
+    });
+
     socket.on('find', function(params) {
         mongo.Db.connect(
             mongoUri, 

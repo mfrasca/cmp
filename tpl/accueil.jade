@@ -66,14 +66,17 @@ body
                   a(href='#', onclick="show_help('dove');") dove
                 li
                   a(href='#', onclick="show_help('quando');") quando
-
-
-  #editComputoModal.modal.hide.fade.broader-window
-    .modal-header
-      button.close(type='button', data-dismiss='modal') ×
-      h3 edit computo
-    .modal-body
+  #computo-body(style="padding-top:3.5em;")
       #computo-dettagli.right-pane(style="margin-left:63%;position:fixed;")
+        div(style="line-height:2em;")
+          button.btn(onclick="$('l-0000-00').focus();hide_computo();") annulla e chiudi
+          button.btn(href='#' onclick="save_computo(); return false;") salva e continua
+          button.btn(href='#' onclick="$('l-0000-00').focus(); save_computo(); hide_computo(); return false;") salva e chiudi
+        div(style="line-height:2em;")
+          hr
+        div(style="clear:both;line-height:2em;")
+          .control-label tariffa
+          input#computo-tariffa.field(name='tariffa', type='text')
         div(style="clear:both;line-height:2em;")
           .control-label committente
           input#computo-committente.field(name='committente', type='text')
@@ -87,9 +90,17 @@ body
           .control-label nome
           input#computo-nome.field(style="margin-bottom:10pt;", name='nome', type='text')
           input#computo-id.field(name='id', type='hidden')
-        #tariffa-descrizione descrizione dell&apos;articolo
+        div(style="clear:both;line-height:1.5em;")
+          #tariffa-descrizione descrizione dell&apos;articolo
       div(style="clear:both;")
       #computo.left-pane(style="height:65%;width:65%;float:left;")
+
+
+  #editComputoModal.modal.hide.fade.broader-window
+    .modal-header
+      button.close(type='button', data-dismiss='modal') ×
+      h3 edit computo
+    // place for .modal-body
     .modal-footer
       button.btn(onclick="$('l-0000-00').focus();" data-dismiss='modal') annulla e chiudi
       button.btn(href='#' onclick="save_computo(); return false;") salva e continua
