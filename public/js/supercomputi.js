@@ -317,8 +317,11 @@ function request_computo(that) {
 
 function receive_articolo(params) {
     console.log(params);
-    if(params)
+    if(params) {
         $('#tariffa-descrizione').text(params.descrizione);
+        $('#tariffa-udm').text(params.udm);
+        $('#tariffa-prezzo').text(params.prezzo);
+    }
 }
 
 function receive_computo(params) {
