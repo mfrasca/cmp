@@ -102,7 +102,7 @@ io.sockets.on('connection', function (socket) {
                             params,
                             function(er, rs) {
                                 result = extend({}, rs);
-                                if(rs && rs.livello === 5 && rs.parent) {
+                                if(rs && rs.livello >= 5 && rs.parent) {
                                     console.log("lookup parent of object: ", rs);
                                     result.descrizione = "...\n" + rs.descrizione;
                                     collection.findOne(
